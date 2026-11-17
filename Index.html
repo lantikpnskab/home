@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>LANTIK-PNS - Kab. Lima Puluh Kota</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Google Font Modern: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif !important; background-color: #f8fafc; margin: 0; }
+    .glass-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.85rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -2px rgba(0,0,0,0.02); }
+    
+    .animate-marquee-smooth {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      will-change: transform;
+      animation: marquee-smooth 35s linear infinite;
+    }
+    .animate-marquee-smooth:hover { animation-play-state: paused; }
+    @keyframes marquee-smooth {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .live-clock-badge {
+      background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px);
+      border: 1px solid rgba(251, 191, 36, 0.3); box-shadow: 0 0 15px rgba(245, 158, 11, 0.15);
+    }
+
+    .pulse-dot {
+      width: 8px; height: 8px; background-color: #10b981; border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); animation: pulse-green 2s infinite;
+    }
+
+    @keyframes pulse-green {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .header-auto-hide { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease; opacity: 1; pointer-events: auto; }
+    .nav-glassmorphism {
+      background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0px;
+    }
+
+    .segmented-control-track { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 9999px; padding: 2px; }
+    .pill-btn { border-radius: 9999px; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); color: #cbd5e1; }
+    .pill-btn:hover { color: #ffffff; background: rgba(255, 255, 255, 0.12); }
+    .pill-btn.active-pill { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #ffffff; font-weight: 700; box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+    .navy-gradient {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    }
+    .doc-card {
+      background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+      border: 1px solid #e2e8f0;
+      transition: all 0.25s ease-in-out;
+    }
+    .doc-card:hover {
+      border-color: #1e3a8a;
+      box-shadow: 0 10px 20px -5px rgba(30, 58, 138, 0.08);
+      transform: translateY(-2px);
+    }
+    .doc-card.drag-over {
+      border: 2px dashed #d97706 !important;
+      background: #fffbeb !important;
+      transform: scale(1.02);
+      box-shadow: 0 12px 24px -6px rgba(217, 119, 6, 0.2);
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .spinner {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #ffffff;
+      animation: spin 0.6s linear infinite;
+    }
+  </style>
+</head>
+
+<body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-100 relative">
+
+  <!-- MAIN CONTENT AREA -->
+  <div id="mainContent" class="flex-1 flex flex-col w-full min-w-0 min-h-screen">
+
+    <!-- HEADER PRO-EXECUTIVE -->
+    <header id="mainHeader" class="header-auto-hide bg-gradient-to-r from-slate-950 via-blue-950 to-slate-900 border-b-2 border-amber-400 pt-3 shadow-2xl sticky top-0 z-30 text-white flex flex-col items-center gap-2.5">
+      
+      <!-- Logo & Title Section (Responsive Flex/Grid for Mobile) -->
+      <div class="w-full max-w-6xl mx-auto px-3 sm:px-6 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center sm:text-left">
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          <div class="w-14 h-14 sm:w-20 sm:h-20 p-1.5 bg-white/95 backdrop-blur rounded-xl shadow-lg border border-amber-400/40 transition hover:scale-105 flex items-center justify-center shrink-0">
+            <img src="https://i.ibb.co.com/1f9QFpXx/Lambang-Kabupaten-Lima-Puluh-Kota.png" alt="Logo Kab" class="w-full h-full object-contain">
+          </div>
+          <div class="h-10 sm:h-16 w-[2px] bg-gradient-to-b from-transparent via-amber-400/60 to-transparent hidden sm:block"></div>
+          <div class="w-14 h-14 sm:w-20 sm:h-20 p-1.5 bg-white/95 backdrop-blur rounded-xl shadow-lg border border-amber-400/40 transition hover:scale-105 flex items-center justify-center shrink-0">
+            <img src="https://i.ibb.co.com/JWP8MDbj/ChatGPT-Image-17-Agu-2026-11-35-22.png" alt="Logo LANTIK-PNS" class="w-full h-full object-contain">
+          </div>
+        </div>
+
+        <div class="h-12 sm:h-16 w-[2px] bg-gradient-to-b from-transparent via-amber-400/60 to-transparent hidden sm:block"></div>
+
+        <div>
+          <h1 class="text-lg sm:text-2xl lg:text-3xl font-black tracking-wider text-white drop-shadow-md leading-tight">
+            LANTIK<span class="text-amber-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">-PNS</span>
+          </h1>
+          <p class="text-[9px] sm:text-[11px] font-bold text-blue-200 uppercase tracking-widest mt-0.5 sm:mt-1">
+            Layanan Terpadu Informasi Kenaikan Pangkat PNS
+          </p>
+          <p class="text-[9px] sm:text-[10px] font-semibold text-amber-400/90 flex items-center justify-center sm:justify-start gap-1 mt-0.5">
+            <i class="fa-solid fa-location-dot text-[9px]"></i> Kab. Lima Puluh Kota
+          </p>
+        </div>
+      </div>
+
+      <!-- MARQUEE -->
+      <div class="w-full max-w-6xl mx-auto px-3 sm:px-6">
+        <div class="relative flex items-center bg-slate-950/60 backdrop-blur-md rounded-full border border-amber-400/30 px-2 py-1 shadow-inner overflow-hidden">
+          <div class="z-10 shrink-0 flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-[9px] sm:text-xs shadow-md uppercase tracking-wider">
+            <i class="fa-solid fa-bullhorn text-slate-950 animate-bounce"></i>
+            <span class="hidden xs:inline">Informasi</span>
+          </div>
+
+          <div class="overflow-hidden whitespace-nowrap w-full ml-3 relative">
+            <div class="animate-marquee-smooth flex items-center gap-6 text-[10px] sm:text-xs font-semibold">
+              <span class="text-white flex items-center gap-2">
+                Selamat datang di <strong class="text-amber-300 font-bold">LANTIK-PNS</strong> (Layanan Terpadu Informasi Kenaikan Pangkat PNS) Kabupaten Lima Puluh Kota
+              </span>
+              <span class="h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0 animate-ping"></span>
+              <span class="text-blue-100 flex items-center gap-1.5">
+                <i class="fa-solid fa-file-arrow-up text-amber-400 text-[10px]"></i>
+                Unggah dokumen persyaratan kenaikan pangkat dengan kualitas asli tanpa kompresi.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NAVBAR -->
+      <nav id="mainNavbar" class="nav-glassmorphism w-full px-3 sm:px-6 py-2 transition-all">
+        <div class="w-full max-w-6xl mx-auto flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
+          <div class="segmented-control-track flex items-center gap-1 shrink-0">
+            <a href="#" class="pill-btn active-pill flex items-center gap-1.5 px-3 py-1 text-xs font-semibold">
+              <i class="fa-solid fa-cloud-arrow-up text-[11px]"></i>
+              <span>Form Upload Bahan Persyaratan Kenaikan Pangkat</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- MAIN FORM BODY (Optimized for Mobile/Tablet/Desktop Spacing) -->
+    <main class="flex-1 p-3 sm:p-6 lg:p-8 max-w-6xl mx-auto w-full">
+
+      <!-- Form Container -->
+      <form id="kpForm" class="glass-card rounded-2xl p-4 sm:p-8 space-y-6 sm:space-y-8 shadow-xl">
+        
+        <input type="hidden" id="isEdit" value="false">
+        <input type="hidden" id="rowIndex" value="">
+
+        <!-- 1. Dropdown Jenis KP -->
+        <div class="bg-gradient-to-r from-slate-50 to-blue-50/30 p-4 sm:p-5 rounded-xl border border-slate-200 shadow-2xs">
+          <label for="jenisKp" class="block text-xs sm:text-sm font-bold text-slate-900 mb-2">
+            1. PILIH JENIS KENAIKAN PANGKAT (JENIS KP) <span class="text-red-600">*</span>
+          </label>
+          <select id="jenisKp" name="jenisKp" required onchange="renderDynamicFields()"
+            class="w-full rounded-xl border-slate-300 border bg-white px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-slate-900 font-medium focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition shadow-2xs">
+            <option value="">-- Pilih Jenis Kenaikan Pangkat --</option>
+            <option value="Kenaikan Pangkat Fungsional">Kenaikan Pangkat Fungsional</option>
+            <option value="Kenaikan Pangkat Pelaksana/Reguler">Kenaikan Pangkat Pelaksana/Reguler</option>
+            <option value="Kenaikan Pangkat Struktural">Kenaikan Pangkat Struktural</option>
+            <option value="Kenaikan Pangkat Penyesuaian Ijazah Fungsional">Kenaikan Pangkat Penyesuaian Ijazah Fungsional</option>
+            <option value="Kenaikan Pangkat Penyesuaian Ijazah Pelaksana">Kenaikan Pangkat Penyesuaian Ijazah Pelaksana</option>
+          </select>
+        </div>
+
+        <!-- Area Form Dinamis -->
+        <div id="dynamicContainer" class="hidden space-y-6 sm:space-y-8">
+          
+          <!-- Bagian Identitas Pegawai -->
+          <div class="bg-gradient-to-br from-slate-50/80 via-white to-blue-50/20 p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-2xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 pb-3 mb-4 sm:mb-5 gap-2">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-5 sm:h-6 bg-amber-500 rounded-full shrink-0"></span>
+                <h2 class="text-base sm:text-lg font-bold text-slate-900">2. Data Identitas & Kepangkatan PNS</h2>
+              </div>
+              <div id="editBadge" class="hidden text-[11px] font-bold bg-amber-100 text-amber-800 px-3 py-1 rounded-full border border-amber-300 self-start sm:self-auto">
+                Mode Edit (NIP Terdaftar)
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+              <div>
+                <label class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">NIP (18 Digit Tanpa Spasi) <span class="text-red-600">*</span></label>
+                <input type="text" id="nip" required maxlength="18" pattern="[0-9]{18}" placeholder="Contoh: 199001012015031001" onblur="cekNipExist(this.value)"
+                  class="w-full rounded-xl border border-slate-300 bg-white px-3 sm:px-4 py-2.5 text-xs sm:text-sm focus:border-blue-900 focus:ring-2 focus:ring-blue-900/20 outline-none shadow-2xs">
+                <p class="text-[10px] sm:text-[11px] text-slate-500 mt-1">Masukkan NIP lalu klik di luar kotak untuk cek data lama.</p>
+              </div>
+
+              <div>
+                <label class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Nama Lengkap (Beserta Gelar) <span class="text-red-600">*</span></label>
+                <input type="text" id="nama" required placeholder="Contoh: Budi Santoso, S.Kom."
+                  class="w-full rounded-xl border border-slate-300 bg-white px-3 sm:px-4 py-2.5 text-xs sm:text-sm focus:border-blue-900 focus:ring-2 focus:ring-blue-900/20 outline-none shadow-2xs">
+              </div>
+
+              <div class="md:col-span-2">
+                <label class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Unit Kerja / OPD <span class="text-red-600">*</span></label>
+                <input type="text" id="unitKerja" required placeholder="Contoh: Dinas Komunikasi dan Informatika"
+                  class="w-full rounded-xl border border-slate-300 bg-white px-3 sm:px-4 py-2.5 text-xs sm:text-sm focus:border-blue-900 focus:ring-2 focus:ring-blue-900/20 outline-none shadow-2xs">
+              </div>
+
+              <div>
+                <label class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Pangkat / Golongan Ruang Lama <span class="text-red-600">*</span></label>
+                <select id="pangkatLama" required class="pangkat-select w-full rounded-xl border border-slate-300 bg-white px-3 sm:px-4 py-2.5 text-xs sm:text-sm focus:border-blue-900 focus:ring-2 focus:ring-blue-900/20 outline-none shadow-2xs">
+                  <option value="">-- Pilih Pangkat / Golongan Lama --</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Pangkat / Golongan Ruang Baru <span class="text-red-600">*</span></label>
+                <select id="pangkatBaru" required class="pangkat-select w-full rounded-xl border border-slate-300 bg-white px-3 sm:px-4 py-2.5 text-xs sm:text-sm focus:border-blue-900 focus:ring-2 focus:ring-blue-900/20 outline-none shadow-2xs">
+                  <option value="">-- Pilih Pangkat / Golongan Baru --</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bagian Upload Dokumen Dinamis (Grid Interaktif + Drag & Drop) -->
+          <div class="bg-gradient-to-br from-slate-50/80 via-white to-blue-50/20 p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-2xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 pb-3 mb-4 gap-2">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-5 sm:h-6 bg-blue-900 rounded-full shrink-0"></span>
+                <h2 class="text-base sm:text-lg font-bold text-slate-900">3. Unggah Dokumen Persyaratan (.PDF)</h2>
+              </div>
+              <span class="text-[11px] text-blue-900 bg-blue-100 px-3 py-1 rounded-full font-medium self-start sm:self-auto">Mendukung Drag & Drop File PDF</span>
+            </div>
+
+            <!-- Petunjuk Penting Upload -->
+            <div class="mb-5 p-3.5 sm:p-4 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-300/80 flex items-start gap-3 shadow-2xs">
+              <span class="text-amber-600 text-base sm:text-lg leading-none mt-0.5">&#9432;</span>
+              <div class="text-[11px] sm:text-xs text-amber-950 leading-relaxed">
+                <strong class="font-bold uppercase tracking-wide block mb-0.5">Petunjuk Pengunggahan Dokumen:</strong>
+                Tarik file PDF ke kotak kartu dokumen atau pilih manual. <span class="font-bold underline text-red-700">Wajib menekan tombol "Upload"</span> di samping file hingga status menjadi <span class="font-semibold text-emerald-700">"✓ Berhasil diunggah"</span>.
+              </div>
+            </div>
+
+            <!-- Grid 1 Kolom di HP, 2 Kolom di Tablet/Desktop -->
+            <div id="documentList" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+              <!-- Field upload dirender otomatis -->
+            </div>
+          </div>
+
+          <!-- Tombol Submit Akhir (Full Width di Mobile, Right-Aligned di Tablet+) -->
+          <div class="pt-4 flex flex-col sm:flex-row justify-end">
+            <button type="submit" id="btnSubmit"
+              class="w-full sm:w-auto navy-gradient hover:opacity-95 text-white font-semibold px-8 py-3.5 rounded-xl shadow-md transition flex items-center justify-center gap-2 border border-amber-400/40 cursor-pointer">
+              <span id="btnText">Selesai & Simpan Berkas</span>
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </main>
+
+    <!-- FOOTER UTAMA -->
+    <footer class="mt-auto bg-slate-900 border-t border-slate-800 text-white py-6 px-4 sm:px-6">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+        <div>
+          <p class="text-xs font-bold text-slate-200">
+            LANTIK-PNS <span class="text-amber-400">&copy; 2026</span>
+          </p>
+          <p class="text-[11px] text-slate-400 mt-0.5">
+            Badan Kepegawaian dan Pengembangan Sumber Daya Manusia Kab. Lima Puluh Kota
+          </p>
+        </div>
+
+        <div class="flex flex-col items-center justify-center">
+          <div class="live-clock-badge px-4 py-1.5 rounded-full flex items-center gap-2">
+            <span class="pulse-dot"></span>
+            <i class="fa-regular fa-clock text-amber-400 text-xs"></i>
+            <span id="liveClock" class="text-xs font-mono font-extrabold tracking-wider text-white">00:00:00 WIB</span>
+            <span class="text-amber-400/60">•</span>
+            <span id="liveDate" class="text-[11px] font-semibold text-blue-200">Memuat tanggal...</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const daftarPangkatPNS = [
+      "Juru Muda (I/a)", "Juru Muda Tingkat I (I/b)", "Juru (I/c)", "Juru Tingkat I (I/d)",
+      "Pengatur Muda (II/a)", "Pengatur Muda Tingkat I (II/b)", "Pengatur (II/c)", "Pengatur Tingkat I (II/d)",
+      "Penata Muda (III/a)", "Penata Muda Tingkat I (III/b)", "Penata (III/c)", "Penata Tingkat I (III/d)",
+      "Pembina (IV/a)", "Pembina Tingkat I (IV/b)", "Pembina Utama Muda (IV/c)", "Pembina Utama Madya (IV/d)", "Pembina Utama (IV/e)"
+    ];
+
+    const skpLabel = "SKP 2 TAHUN TERAKHIR (Periode KP Jan-Feb: SKP 2024-2025 | Periode KP Maret dst: SKP 2025-2026)";
+
+    const dokumenByJenis = {
+      "Kenaikan Pangkat Fungsional": [
+        "SK PANGKAT TERAKHIR (Jika belum pernah naik pangkat dokumen yang dilampirkan SK CPNS dan PNS)",
+        "SK JABATAN FUNGSIONAL PERTAMA KALI (INPASSING)",
+        "SK JABATAN FUNGSIONAL SEBELUMNYA ATAU PENGANGKATAN PERTAMA",
+        "SK JABATAN FUNGSIONAL TERAKHIR",
+        "SK MUTASI (JIKA PINDAH OPD/INSTANSI)",
+        skpLabel,
+        "PAK Tahunan (Dari SK Pangkat Terakhir sampai 2022)",
+        "PAK INTEGRASI",
+        "PAK KONVERSI 2023",
+        "PAK KONVERSI 2024",
+        "PAK KONVERSI 2025",
+        "PAK KONVERSI 2026",
+        "SK ATASAN (SK PANGKAT DAN SK JABATAN)",
+        "SERTIFIKAT UKOM",
+        "PETA JABATAN",
+        "IJAZAH ASLI & FORLAP DIKTI",
+        "TRANSKRIP NILAI ASLI",
+        "SERTIFIKAT PENDIDIK DAN INDUKSI (KHUSUS GURU)",
+        "TANGKAPAN LAYAR DMS",
+        "STR AKTIF (KHUSUS NAKES)",
+        "SURAT PERTANGGUNG JAWABAN MUTLAK (SPTJM)"
+      ],
+      "Kenaikan Pangkat Pelaksana/Reguler": [
+        "SK PANGKAT TERAKHIR (Jika belum pernah naik pangkat dokumen yang dilampirkan SK CPNS dan PNS)",
+        "SK JABATAN (Riwayat Jabatan dari Pangkat Terakhir)",
+        "SK MUTASI (JIKA PINDAH OPD/INSTANSI)",
+        skpLabel,
+        "SERTIFIKAT UJIAN DINAS",
+        "SK ATASAN LANGSUNG",
+        "TANGKAPAN LAYAR DMS"
+      ],
+      "Kenaikan Pangkat Struktural": [
+        "SK PANGKAT TERAKHIR (Jika belum pernah naik pangkat dokumen yang dilampirkan SK CPNS dan PNS)",
+        "SK JABATAN (Riwayat Jabatan dari Pangkat Terakhir)",
+        "SK MUTASI (JIKA PINDAH OPD/INSTANSI)",
+        skpLabel,
+        "SERTIFIKAT UJIAN DINAS",
+        "SK ATASAN LANGSUNG",
+        "TANGKAPAN LAYAR DMS"
+      ],
+      "Kenaikan Pangkat Penyesuaian Ijazah Fungsional": [
+        "SK PANGKAT TERAKHIR (Jika belum pernah naik pangkat dokumen yang dilampirkan SK CPNS dan PNS)",
+        "SK JABATAN FUNGSIONAL PERTAMA KALI (INPASSING)",
+        "SK JABATAN FUNGSIONAL SEBELUMNYA ATAU PENGANGKATAN PERTAMA",
+        "SK JABATAN FUNGSIONAL TERAKHIR",
+        "SK MUTASI (JIKA PINDAH OPD/INSTANSI)",
+        skpLabel,
+        "SK TUGAS BELAJAR (TUBEL)",
+        "SK PEMBERHENTIAN FUNGSIONAL",
+        "SK PENGANGKATAN KE JABATAN PELAKSANA",
+        "PAK Tahunan (Dari SK Pangkat Terakhir sampai 2022)",
+        "PAK INTEGRASI",
+        "PAK KONVERSI 2023",
+        "PAK KONVERSI 2024",
+        "PAK KONVERSI 2025",
+        "PAK KONVERSI 2026",
+        "SK ATASAN (SK PANGKAT DAN SK JABATAN)",
+        "SERTIFIKAT UKOM",
+        "SERTIFIKAT UJIAN KENAIKAN PANGKAT PENYESUAIAN IJAZAH (KPPI)",
+        "URAIAN TUGAS YANG DITETAPKAN PEJABAT SETINGKAT ESELON II",
+        "PETA JABATAN",
+        "IJAZAH ASLI & FORLAP DIKTI",
+        "TRANSKRIP NILAI ASLI",
+        "SERTIFIKAT PENDIDIK DAN INDUKSI (KHUSUS GURU)",
+        "TANGKAPAN LAYAR DMS",
+        "STR AKTIF (KHUSUS NAKES)",
+        "SURAT PERTANGGUNG JAWABAN MUTLAK (SPTJM)"
+      ],
+      "Kenaikan Pangkat Penyesuaian Ijazah Pelaksana": [
+        "SK PANGKAT TERAKHIR (Jika belum pernah naik pangkat dokumen yang dilampirkan SK CPNS dan PNS)",
+        "SK JABATAN (Riwayat Jabatan dari Pangkat Terakhir)",
+        "SK MUTASI (JIKA PINDAH OPD/INSTANSI)",
+        skpLabel,
+        "SK ATASAN (SK PANGKAT DAN SK JABATAN)",
+        "SERTIFIKAT UJIAN KENAIKAN PANGKAT PENYESUAIAN IJAZAH (KPPI)",
+        "URAIAN TUGAS YANG DITETAPKAN PEJABAT SETINGKAT ESELON II",
+        "IJAZAH ASLI & FORLAP DIKTI",
+        "TRANSKRIP NILAI ASLI",
+        "TANGKAPAN LAYAR DMS"
+      ]
+    };
+
+    function formatLabelMerah(text) {
+      return text.replace(/\(([^)]+)\)/g, '<span class="text-red-600 font-semibold">($1)</span>');
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const selects = document.querySelectorAll('.pangkat-select');
+      selects.forEach(select => {
+        daftarPangkatPNS.forEach(pangkat => {
+          const opt = document.createElement('option');
+          opt.value = pangkat;
+          opt.textContent = pangkat;
+          select.appendChild(opt);
+        });
+      });
+      initLiveClock();
+    });
+
+    function initLiveClock() {
+      function updateClock() {
+        const now = new Date();
+        const clockEl = document.getElementById('liveClock');
+        const dateEl = document.getElementById('liveDate');
+        if (clockEl) clockEl.textContent = now.toLocaleTimeString('id-ID') + ' WIB';
+        if (dateEl) {
+          const options = { weekday: 'long', day: 'numeric', month: 'short', year: 'numeric' };
+          dateEl.textContent = now.toLocaleDateString('id-ID', options);
+        }
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+    }
+
+    function handleDragOver(e, index) {
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById(`card-box-${index}`).classList.add('drag-over');
+    }
+
+    function handleDragLeave(e, index) {
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById(`card-box-${index}`).classList.remove('drag-over');
+    }
+
+    function handleDrop(e, index) {
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById(`card-box-${index}`).classList.remove('drag-over');
+
+      const files = e.dataTransfer.files;
+      if (files && files.length > 0) {
+        const droppedFile = files[0];
+        if (droppedFile.type !== 'application/pdf') {
+          Swal.fire('Format Tidak Didukung', 'Hanya file berformat .PDF yang diperbolehkan.', 'warning');
+          return;
+        }
+        const fileInput = document.getElementById(`file-${index}`);
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(droppedFile);
+        fileInput.files = dataTransfer.files;
+        onFileSelected(index);
+      }
+    }
+
+    function onFileSelected(index) {
+      const fileInput = document.getElementById(`file-${index}`);
+      const statusEl = document.getElementById(`status-${index}`);
+      const btnUpload = document.getElementById(`btn-upload-${index}`);
+      const cardBox = document.getElementById(`card-box-${index}`);
+
+      if (fileInput.files.length > 0) {
+        const fileName = fileInput.files[0].name;
+        statusEl.innerHTML = `<span class="text-amber-600 font-bold">⚠ Siap: "${fileName}" &rarr; Klik "Upload"</span>`;
+        cardBox.classList.add('border-amber-400', 'bg-amber-50/20');
+        btnUpload.classList.remove('bg-blue-900', 'hover:bg-blue-950');
+        btnUpload.classList.add('bg-amber-600', 'hover:bg-amber-700', 'ring-2', 'ring-amber-300');
+      } else {
+        statusEl.innerHTML = `Tarik & letakkan file PDF di sini atau pilih manual`;
+        cardBox.classList.remove('border-amber-400', 'bg-amber-50/20');
+        btnUpload.classList.remove('bg-amber-600', 'hover:bg-amber-700', 'ring-2', 'ring-amber-300');
+        btnUpload.classList.add('bg-blue-900', 'hover:bg-blue-950');
+      }
+    }
+
+    function renderDynamicFields() {
+      const jenisKp = document.getElementById('jenisKp').value;
+      const container = document.getElementById('dynamicContainer');
+      const docList = document.getElementById('documentList');
+
+      if (!jenisKp) {
+        container.classList.add('hidden');
+        docList.innerHTML = '';
+        return;
+      }
+
+      container.classList.remove('hidden');
+      docList.innerHTML = '';
+
+      const docs = dokumenByJenis[jenisKp] || [];
+      docs.forEach((docLabel, index) => {
+        const formattedLabel = formatLabelMerah(docLabel);
+        const card = `
+          <div id="card-box-${index}"
+            ondragover="handleDragOver(event, ${index})"
+            ondragleave="handleDragLeave(event, ${index})"
+            ondrop="handleDrop(event, ${index})"
+            class="doc-card p-4 sm:p-5 rounded-2xl flex flex-col justify-between gap-4 shadow-xs relative">
+            
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <div class="flex items-center gap-2 mb-1.5">
+                  <span class="inline-block px-2.5 py-0.5 rounded-md bg-blue-900/10 text-blue-950 font-bold text-[10px] sm:text-[11px]">No. ${index + 1}</span>
+                  <span class="text-[9px] sm:text-[10px] font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded border border-slate-200/70">Drag & Drop PDF</span>
+                </div>
+                <h3 class="text-xs sm:text-sm font-bold text-slate-900 leading-snug">${formattedLabel}</h3>
+              </div>
+              <span id="badge-${index}" class="shrink-0 w-7 h-7 rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold border border-slate-200">📄</span>
+            </div>
+
+            <div class="space-y-2.5 pt-3 border-t border-slate-100">
+              <div id="status-${index}" class="text-[10px] sm:text-[11px] text-slate-500 font-medium truncate">Tarik & letakkan file PDF di sini atau pilih manual</div>
+              
+              <!-- Responsive stacked/flex input layout for mobile screens -->
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                <input type="file" id="file-${index}" data-label="${docLabel}" accept="application/pdf" onchange="onFileSelected(${index})"
+                  class="block w-full text-[11px] sm:text-xs text-slate-600
+                  file:mr-2 file:py-2 file:px-3
+                  file:rounded-xl file:border-0
+                  file:text-xs file:font-bold
+                  file:bg-blue-50 file:text-blue-900
+                  hover:file:bg-blue-100 cursor-pointer border border-slate-200 rounded-xl bg-white shadow-2xs">
+                
+                <button type="button" id="btn-upload-${index}" onclick="uploadSingleFile(${index}, '${docLabel.replace(/'/g, "\\'")}')"
+                  class="bg-blue-900 hover:bg-blue-950 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition shadow-sm whitespace-nowrap cursor-pointer">
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        docList.insertAdjacentHTML('beforeend', card);
+      });
+    }
+
+    function cekNipExist(nip) {
+      if (!nip || nip.length < 10) return;
+      
+      google.script.run
+        .withSuccessHandler(function(res) {
+          if (res.exists) {
+            document.getElementById('isEdit').value = "true";
+            document.getElementById('rowIndex').value = res.rowIndex;
+            document.getElementById('nama').value = res.data.nama;
+            document.getElementById('unitKerja').value = res.data.unitKerja;
+            document.getElementById('pangkatLama').value = res.data.pangkatLama;
+            document.getElementById('pangkatBaru').value = res.data.pangkatBaru;
+            
+            if (res.data.jenisKp) {
+              document.getElementById('jenisKp').value = res.data.jenisKp;
+              renderDynamicFields();
+            }
+
+            document.getElementById('editBadge').classList.remove('hidden');
+            document.getElementById('btnText').textContent = 'Selesai & Perbarui Data';
+
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              icon: 'info',
+              title: 'NIP Ditemukan! Masuk ke Mode Edit Data.',
+              showConfirmButton: false,
+              timer: 3000
+            });
+          } else {
+            document.getElementById('isEdit').value = "false";
+            document.getElementById('rowIndex').value = "";
+            document.getElementById('editBadge').classList.add('hidden');
+            document.getElementById('btnText').textContent = 'Selesai & Simpan Berkas';
+          }
+        })
+        .cekNipTerdaftar(nip);
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve({
+          fileName: file.name,
+          mimeType: file.type,
+          data: reader.result
+        });
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    async function uploadSingleFile(index, docLabel) {
+      const nip = document.getElementById('nip').value.trim();
+      const nama = document.getElementById('nama').value.trim();
+      const unitKerja = document.getElementById('unitKerja').value.trim();
+      const jenisKp = document.getElementById('jenisKp').value;
+
+      if (!nip || !nama || !unitKerja || !jenisKp) {
+        Swal.fire('Data Belum Lengkap', 'Mohon isi NIP, Nama, Unit Kerja, dan Jenis KP terlebih dahulu sebelum mengunggah dokumen.', 'warning');
+        return;
+      }
+
+      const fileInput = document.getElementById(`file-${index}`);
+      if (fileInput.files.length === 0) {
+        Swal.fire('Pilih File', 'Silakan tarik file PDF ke kartu atau pilih file terlebih dahulu.', 'warning');
+        return;
+      }
+
+      const file = fileInput.files[0];
+      if (file.type !== 'application/pdf') {
+        Swal.fire('Format Salah', 'File harus berformat PDF.', 'warning');
+        return;
+      }
+
+      const statusEl = document.getElementById(`status-${index}`);
+      const btnUpload = document.getElementById(`btn-upload-${index}`);
+      const cardBox = document.getElementById(`card-box-${index}`);
+      const badgeEl = document.getElementById(`badge-${index}`);
+      
+      const originalText = btnUpload.innerHTML;
+      btnUpload.disabled = true;
+      btnUpload.innerHTML = `<span class="spinner"></span> Mengunggah...`;
+      statusEl.innerHTML = `<span class="text-blue-600 font-semibold">Mengirim dokumen...</span>`;
+
+      try {
+        const initData = {
+          isEdit: document.getElementById('isEdit').value === "true",
+          rowIndex: document.getElementById('rowIndex').value,
+          jenisKp: jenisKp,
+          nip: nip,
+          nama: nama,
+          unitKerja: unitKerja,
+          pangkatLama: document.getElementById('pangkatLama').value,
+          pangkatBaru: document.getElementById('pangkatBaru').value
+        };
+
+        const resInit = await new Promise((resolve, reject) => {
+          google.script.run.withSuccessHandler(resolve).withFailureHandler(reject).siapkanDirektoriAwal(initData);
+        });
+
+        if (resInit.status !== 'success') {
+          throw new Error(resInit.message);
+        }
+
+        document.getElementById('rowIndex').value = resInit.rowIndex;
+
+        const cleanDocLabel = docLabel.replace(/\s*\([^)]*\)/g, '').trim();
+
+        const converted = await fileToBase64(file);
+        const payload = {
+          rowIndex: resInit.rowIndex,
+          nip: nip,
+          fileData: {
+            label: cleanDocLabel,
+            fileName: converted.fileName,
+            mimeType: converted.mimeType,
+            data: converted.data
+          }
+        };
+
+        const resUpload = await new Promise((resolve, reject) => {
+          google.script.run.withSuccessHandler(resolve).withFailureHandler(reject).uploadSingleFileDirect(payload);
+        });
+
+        if (resUpload.status === 'success') {
+          statusEl.innerHTML = `<span class="text-emerald-600 font-bold">✓ Berhasil diunggah</span> (<a href="${resUpload.fileUrl}" target="_blank" class="underline text-blue-600 font-medium">Lihat File</a>)`;
+          cardBox.classList.remove('border-amber-400', 'bg-amber-50/20');
+          cardBox.classList.add('border-emerald-400/80', 'bg-emerald-50/10');
+          badgeEl.className = "shrink-0 w-7 h-7 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-bold border border-emerald-200";
+          badgeEl.innerHTML = "✓";
+
+          btnUpload.disabled = false;
+          btnUpload.className = "bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition shadow-sm whitespace-nowrap cursor-pointer";
+          btnUpload.textContent = 'Ulangi';
+
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: `${cleanDocLabel} berhasil diunggah!`,
+            showConfirmButton: false,
+            timer: 2000
+          });
+        } else {
+          throw new Error(resUpload.message);
+        }
+
+      } catch (err) {
+        statusEl.innerHTML = `<span class="text-red-600 font-semibold">Gagal diunggah</span>`;
+        btnUpload.disabled = false;
+        btnUpload.innerHTML = originalText;
+        Swal.fire('Gagal', err.toString(), 'error');
+      }
+    }
+
+    document.getElementById('kpForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nip = document.getElementById('nip').value.trim();
+      if (!nip) {
+        Swal.fire('Perhatian', 'Mohon lengkapi data identitas.', 'warning');
+        return;
+      }
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Pengisian Berkas Selesai!',
+        text: 'Seluruh dokumen telah tersimpan otomatis di dalam sistem.',
+        confirmButtonText: 'Input Data Pegawai Lain',
+        confirmButtonColor: '#0f172a'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          document.getElementById('kpForm').reset();
+          document.getElementById('isEdit').value = "false";
+          document.getElementById('rowIndex').value = "";
+          document.getElementById('editBadge').classList.add('hidden');
+          document.getElementById('btnText').textContent = 'Selesai & Simpan Berkas';
+          document.getElementById('dynamicContainer').classList.add('hidden');
+          document.getElementById('jenisKp').value = "";
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
